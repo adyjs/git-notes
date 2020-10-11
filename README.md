@@ -23,6 +23,9 @@ so no matter what you want to do after,
 git will compare those new files or new changes to the file in .git
 
 
+
+# Clean / Restore / Rm
+
 ## clean
 
 * meaning
@@ -46,7 +49,6 @@ restore the operation you did on last step
 $ git restore FILE_DELETED
 
 ```
-
 
 ## git rm
 
@@ -80,6 +82,10 @@ $ git rm FILE_DONT_WANT_TRACKED --cache
 now the trached cache of this file will be cleared,
 therefor, this file in git will be the untracked file. 
 
+
+
+# Log / Reflog / Blame
+
 ## log
 
 * meaning
@@ -92,7 +98,7 @@ commit messages
 
 1) limited / all log
 ```
-$ git log [--all] [--oneline] [--graph] [-p]
+$ git log [--all] [--oneline] [--graph] [-p] [--author="NAME"]
 
 -p : display difference of each commits
 
@@ -103,7 +109,24 @@ $ git log [--all] [--oneline] [--graph] [-p]
 $ git log file
 ```
 
-3) log 
+3) log
+
+
+## reflog
+
+* meaning 
+
+records about each operation related to commits, checkout, branches  
+
+```
+3436d2a (HEAD -> master) HEAD@{0}: commit: remove test.file
+2b0109d HEAD@{1}: commit: add test.file
+3a18267 HEAD@{2}: commit: add gitignore file
+```
+we could noticed that there is commit hash and HEAD@{index} in each line,
+
+it is better by using HEAD@{index} for doing reset related opertion.
+
 
 
 ## blame
@@ -136,6 +159,49 @@ nodes                                           number
 
 ```
 
+
+## reset
+
+* meaning
+
+change HEAD pointer to backward commits node for re-doing something
+
+```
+$ git reset COMMIT_HASH / HEAD@{} [--mixed] [--soft] [--hard]
+
+```
+* --mixed (default) : 
+reset --mixed will remove the file changes in staging area,   
+but file changes will still keep in work directory, shows like [modified]  
+
+* --soft :
+no changes in work directory and staging area,
+pretty like just detach HEAD pointer
+
+* --hard :
+all changes will be removed in work directory and staging area,
+so, in log we could not see the newest commits record that we commit before.
+
+
+we all need to know one thing that no matter opinion with reset,  
+the commits node, will not be really remove in .git,  
+all the different is that visual or not.
+
+so, this means no matter the setting of opinion,
+if we doing some mistake with reset, we all could be retrieve commit node back.
+
+
+
+# Branch / Checkout / Rebase / Merge / Cherry-Pick
+
+
+## branch
+
+* branch 
+    * branch -f name node
+
+
+
 ## checkout
 
 * meaning
@@ -167,29 +233,9 @@ double dash means we don't want to switch branch,
 we just want to checkout FILE for restore, 
 
 
+## merge
 
-* tag
-
-* ref
-    1. HEAD~2
-    2. HEAD~~
-    3. HEAD^^
-        * 2 commits older than HEAD
-        
-    2. HEAD^2
-        * if HEAD was merge, HEAD^1 is closer parent, HEAD^2 is farer parent.
-
-    5. HEAD@{2}
-        * 
-
-
-
-## branch
-
-* branch 
-    * branch -f name node
-
-
+* meaning
 
 
 ## rebase
@@ -259,3 +305,34 @@ check reflog, get the last HEAD position before on rebase start
 ### cherry-picl
 * cherry-pick
     * 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* tag
+
+* ref
+    1. HEAD~2
+    2. HEAD~~
+    3. HEAD^^
+        * 2 commits older than HEAD
+        
+    2. HEAD^2
+        * if HEAD was merge, HEAD^1 is closer parent, HEAD^2 is farer parent.
+
+    5. HEAD@{2}
+        * 
+
