@@ -190,14 +190,7 @@ then means you set a branch name tag on a commit node
 $ git branch -m OLD_BRANCH_NAME NEW_BRANCH_NAME
 ```
 
-3) delete a branch
-```
-$ git branch -d [-D] BRANCH_NAME
-```
-upcase -D means delete branch by force
-
-
-4) force a branch tag moves to other commits
+3) force a branch tag moves to other commits
 ```
 $ branch -f BRANCH_NAME COMMIT_NODE
 ```
@@ -206,6 +199,16 @@ we use it for give the meaning for commit nodes,
 they are independently between branch and commit node,
 so we could move the branch sticker to anywhere we want,
 it doesn't effect to the commit node.
+
+
+4) delete a branch
+```
+$ git branch -d [-D] BRANCH_NAME
+```
+upcase -D means delete branch by force
+
+same as above, the branch we deleted before merged,
+we just delete the branch tag sticker, doesn't delete commit nodes
 
 
 ## checkout
@@ -364,7 +367,27 @@ check reflog, get the last HEAD position before on rebase start
     * 
 
 
-# Reset / Revert
+# Ref / Reset / Revert
+
+* meaning 
+
+ref is not a command in git,
+it just a variable to relate with other things.
+
+if HEAD means current commit node, then
+
+1. HEAD~2
+2. HEAD~~
+3. HEAD^^
+    * 2 commits older than HEAD
+    
+4. HEAD^2
+    * if HEAD was merge, HEAD^1 is closer parent, HEAD^2 is farer parent.
+
+5. HEAD@{2}
+    * the last 2 operate in reflog
+
+
 
 ## reset
 
@@ -373,7 +396,7 @@ check reflog, get the last HEAD position before on rebase start
 change HEAD pointer to backward commits node for re-doing something
 
 ```
-$ git reset COMMIT_HASH / HEAD@{} [--mixed] [--soft] [--hard]
+$ git reset COMMIT_HASH / HEAD@{} / HEAD(ref) [--mixed] [--soft] [--hard]
 
 ```
 * --mixed (default) : 
@@ -386,7 +409,7 @@ pretty like just detach HEAD pointer
 
 * --hard :
 all changes will be removed in work directory and staging area,
-so, in log we could not see the newest commits record that we commit before.
+so, in log we can not see the newest commits record that we commit before.
 
 
 we all need to know one thing that no matter opinion with reset,  
@@ -414,16 +437,4 @@ if we doing some mistake with reset, we all could be retrieve commit node back.
 
 
 * tag
-
-* ref
-    1. HEAD~2
-    2. HEAD~~
-    3. HEAD^^
-        * 2 commits older than HEAD
-        
-    2. HEAD^2
-        * if HEAD was merge, HEAD^1 is closer parent, HEAD^2 is farer parent.
-
-    5. HEAD@{2}
-        * 
 
