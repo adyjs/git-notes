@@ -28,7 +28,8 @@ git will compare those new files or new changes to the file in .git
 
 ## clean
 
-* meaning
+* meaning  
+
 
 remove untracked files from the working tree
 
@@ -40,8 +41,10 @@ $ git clean -fX
 
 ## restore
 
-* meaning
-restore the operation you did on last step 
+* meaning  
+
+restore the changes has made in working directory and staging area,
+pretty like using $ git checkout for restore files.
 
 
 1) restore tracked file you delete
@@ -52,7 +55,8 @@ $ git restore FILE_DELETED
 
 ## git rm
 
-* meaning
+* meaning  
+
 
 actually, remove file by "$ git rm" or by "$ rm" in BASH, 
 that would not be quite different,
@@ -88,7 +92,7 @@ therefor, this file in git will be the untracked file.
 
 ## log
 
-* meaning
+* meaning  
 
 check log of commits , including
 commit related,
@@ -114,7 +118,7 @@ $ git log file
 
 ## reflog
 
-* meaning 
+* meaning  
 
 records about each operation related to commits, checkout, branches  
 
@@ -128,12 +132,11 @@ we could noticed that there is commit hash and HEAD@{index} in each line,
 it is better by using HEAD@{index} for doing reset related opertion.
 
 
-
 ## blame
 
-* meaning
+* meaning  
 
-this will helps to find out the codes which who wrote
+this will helps to find out the each line of codes which who had  wrote
 
 ```
 $ git blame FILE
@@ -160,53 +163,57 @@ nodes                                           number
 ```
 
 
-## reset
 
-* meaning
-
-change HEAD pointer to backward commits node for re-doing something
-
-```
-$ git reset COMMIT_HASH / HEAD@{} [--mixed] [--soft] [--hard]
-
-```
-* --mixed (default) : 
-reset --mixed will remove the file changes in staging area,   
-but file changes will still keep in work directory, shows like [modified]  
-
-* --soft :
-no changes in work directory and staging area,
-pretty like just detach HEAD pointer
-
-* --hard :
-all changes will be removed in work directory and staging area,
-so, in log we could not see the newest commits record that we commit before.
-
-
-we all need to know one thing that no matter opinion with reset,  
-the commits node, will not be really remove in .git,  
-all the different is that visual or not.
-
-so, this means no matter the setting of opinion,
-if we doing some mistake with reset, we all could be retrieve commit node back.
-
-
-
-# Branch / Checkout / Rebase / Merge / Cherry-Pick
-
+# Branch / Checkout
 
 ## branch
 
-* branch 
-    * branch -f name node
+* meaning   
 
+branch means there is a move-able tag flows along to the commits, 
+
+actually, branch and commits node are independent respectively,
+
+so, we could merge commits, or move tag onto other commits nodes.
+
+1) generate a branch
+```
+$ git branch BRANCH_NAME [NODE_COMMIT_HASH]
+
+```
+if add a node commit hash after BRANCH_NAME,
+then means you set a branch name tag on a commit node
+
+
+2) rename a branch
+```
+$ git branch -m OLD_BRANCH_NAME NEW_BRANCH_NAME
+```
+
+3) delete a branch
+```
+$ git branch -d [-D] BRANCH_NAME
+```
+upcase -D means delete branch by force
+
+
+4) force a branch tag moves to other commits
+```
+$ branch -f BRANCH_NAME COMMIT_NODE
+```
+like said before, branch name just like a sticker,
+we use it for give the meaning for commit nodes,
+they are independently between branch and commit node,
+so we could move the branch sticker to anywhere we want,
+it doesn't effect to the commit node.
 
 
 ## checkout
 
-* meaning
+* meaning  
 
-checkout means move the HEAD pointer to points nodes of working tree,
+checkout means change the state of working directory
+actually, it is moving the HEAD pointer to points nodes of working tree,
 
 each commit node is a state of codebase, also called snapshot,
 so no matter change HEAD pointer to a branch tag or just a commit node, git will change the working directory state by commit node with the files in .git repository.
@@ -224,7 +231,7 @@ $ git checkout BRANCH_NAME
 $ git checkout COMMIT_HASH
 ```
 
-3) checkout files from staging area (if doesn't add changes file from working directory, then staging area is as same as repository (.git))
+3) checkout files from staging area (if doesn't add changes file from working directory, then staging area is as same as repository (.git), this usually used in situation of restoring something)
 ```
 $ git checkout -- FILE
 
@@ -233,12 +240,62 @@ double dash means we don't want to switch branch,
 we just want to checkout FILE for restore, 
 
 
+
+# Merge / Rebase / Cherry-Pick
+
 ## merge
 
-* meaning
+* meaning  
+
+merge means 2 branches were got some different, so they are in different flow of branch, pretty easy to understand,
+
+if we want to combine these 2 branches, then need to merge
+
+if A branch wants to merge B branch
+then, needs to checkout to the branch A first
+
+```
+$ git merge B
+
+```
+then A are as same as B
+
+* A merge B / B merge A , difference?
+
+1) B base on A, A merge B
+
+it will be Fast-Forward mode , A as same as B
+
+```
+$ git merge B [--no-ff]
+
+```
+--no-ff : means do not want to use fast-forward,  
+
+so you can see the 2 branch merge in visual graph.
+
+
+
+2) A base on C, B also base on C
+
+it got some little complicated,
+because A and B are different, so during merge it may got some conflict and will generate a new commit node.
+
+the newest commit node is the combines of A and B,
+no matter who merge who, the newest commit node always be the same.
+the difference of who merge who is that 
+which tag still flow with branch
+
+if A merge B, then A will keep move on along with flow,
+but B just stay on his old position.
+
+
+
 
 
 ## rebase
+
+* meaning    
 
 
 why use
@@ -252,8 +309,6 @@ rebase will not generate extra commit node,
 also modify records, modify branch visulization, 
 that may be bringing some issues for self and other people.
 ```
-
-meaning
 
 ```
 A1 -> A2 -> A3
@@ -303,10 +358,46 @@ check reflog, get the last HEAD position before on rebase start
 
 
 ### cherry-picl
+
+
 * cherry-pick
     * 
 
 
+# Reset / Revert
+
+## reset
+
+* meaning  
+
+change HEAD pointer to backward commits node for re-doing something
+
+```
+$ git reset COMMIT_HASH / HEAD@{} [--mixed] [--soft] [--hard]
+
+```
+* --mixed (default) : 
+reset --mixed will remove the file changes in staging area,   
+but file changes will still keep in work directory, shows like [modified]  
+
+* --soft :
+no changes in work directory and staging area,
+pretty like just detach HEAD pointer
+
+* --hard :
+all changes will be removed in work directory and staging area,
+so, in log we could not see the newest commits record that we commit before.
+
+
+we all need to know one thing that no matter opinion with reset,  
+the commits node, will not be really remove in .git,  
+all the different is that visual or not.
+
+so, this means no matter the setting of opinion,
+if we doing some mistake with reset, we all could be retrieve commit node back.
+
+
+## revert
 
 
 
