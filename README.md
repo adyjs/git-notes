@@ -244,7 +244,7 @@ we just want to checkout FILE for restore,
 
 
 
-# Merge / Rebase / Cherry-Pick
+# Merge / Rebase / Squash / Cherry-Pick
 
 ## merge
 
@@ -326,7 +326,7 @@ to make B as new base of A.
 B1 -> B2 -> A1' -> A2' -> A3'
 ```
 
-how to cancel rebase
+### how to cancel rebase
 
 * if rebase on progress
 ```
@@ -355,12 +355,29 @@ check reflog, get the last HEAD position before on rebase start
 
 ```
 
-* rebase
-    * rebase -i
+* interactive rebase
+
+pick commit nodes you want.
+
+you could custom branch flows by interactive rebase,
+
+you could ignore, pick or edit message on old commit nodes.
+
+```
+$ rebase -i
+```
 
 
+## squash
 
-### cherry-picl
+* meaning
+
+combine commit nodes into 1 node for cleaner visual
+
+[squash](https://gitbook.tw/chapters/rewrite-history/merge-multiple-commits-to-one-commit.html)
+
+
+## cherry-picl
 
 
 * cherry-pick
