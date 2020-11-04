@@ -47,10 +47,15 @@ restore the changes has made in working directory and staging area,
 pretty like using $ git checkout for restore files.
 
 
-1) restore tracked file you delete
+1) before ADDING, restore tracked file you deleted / modified
 ```
 $ git restore FILE_DELETED
 
+```
+
+2) after ADDING, restore file which had been added on stage area
+```
+$ git restore --stage FILE_ADDED
 ```
 
 ## git rm
