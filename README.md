@@ -24,6 +24,44 @@ git will compare those new files or new changes to the file in .git
 
 
 
+# Add
+
+## add
+
+* meaning
+
+adding changes of file content
+
+1) adding all of changes in the directory
+
+```
+$ git add .
+```
+
+2) manually adding changes each file
+```
+$ git add ./FILE -p
+```
+after use this command, 
+git will sperate code blocks automatically for you,
+and will show prompt like this.
+
+Stage this hunk [y,n,q,a,d,s,e,?]? 
+
+__y__ : means you want to add this code block as changes this time    
+__n__ : means you don't want to add this code block as changes this time    
+__q__ : quit and do nothing    
+__a__ : add all code blocks as changes this time    
+__d__ : don't want to add this code block and later hunks     
+__s__ : split the current hunk into smaller hunks    
+__e__ : split/add/delete the current hunk into smaller hunks manually    
+__?__ : print help    
+
+使用 add -p 有相當多的好處，  
+可以把每一個 commit node 的內容分的更清楚
+
+
+
 # Clean / Restore / Rm
 
 ## clean
