@@ -24,7 +24,7 @@ git will compare those new files or new changes to the file in .git
 
 
 
-# Add
+# Add / Commit
 
 ## add
 
@@ -61,6 +61,14 @@ __?__ : print help
 可以把每一個 commit node 的內容分的更清楚
 
 
+## commit
+
+commit command generally means create a snapshot node,  
+
+基本上只要是 commit 過的 node，  
+不管 node 是被 reset, revert, --amend 所影響,    
+而在 branch 線型上看不到，但是實際上 node 還是存在，  
+git 會判斷到其 node 過舊才會做 node GC
 
 # Clean / Restore / Rm
 
