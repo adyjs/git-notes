@@ -70,6 +70,18 @@ commit command generally means create a snapshot node,
 而在 branch 線型上看不到，但是實際上 node 還是存在，  
 git 會判斷到其 node 過舊才會做 node GC
 
+1) --amend
+
+--amend 表面上的意義是改動最新的 commit node 的 message，  
+但實際上在 --amend 改動 commit message 之後，  
+可以看到新的 commit hash，因此可知跟原本的 commit node 不同， 
+
+可分為 old node 跟 new node，commit tree 是連接到 new node，    
+而 old node 仍然在那邊，
+
+如上方說明，old commit node 必須等到 git 做 GC  
+
+
 # Clean / Restore / Rm
 
 ## clean
